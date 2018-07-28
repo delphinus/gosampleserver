@@ -65,3 +65,5 @@ tags
 [._]*.un~
 
 
+### custom rules
+/gosampleserver
