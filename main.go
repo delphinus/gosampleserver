@@ -20,7 +20,7 @@ func main() {
 
 func process() error {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		var in io.Reader
+		var in io.ReadCloser
 		var contentType string
 		var status int
 		var err error
@@ -40,6 +40,7 @@ func process() error {
 		}
 		var body []byte
 		if in != nil {
+			defer in.Close()
 			body, err = ioutil.ReadAll(in)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
@@ -56,7 +57,7 @@ func process() error {
 }
 
 func get(r *http.Request) (
-	in io.Reader, contentType string, status int, err error) {
+	in io.ReadCloser, contentType string, status int, err error) {
 	path := r.URL.Path
 	if path == "/" {
 		path = "/index.html"

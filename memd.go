@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 
@@ -20,7 +21,7 @@ type Counter struct {
 	Num int `json:"num"`
 }
 
-func getCounterJSON() (io.Reader, int, error) {
+func getCounterJSON() (io.ReadCloser, int, error) {
 	var c Counter
 	mc := memcache.New(memd)
 	if item, err := mc.Get(key); err == nil {
@@ -37,7 +38,7 @@ func getCounterJSON() (io.Reader, int, error) {
 	if err := json.NewEncoder(out).Encode(&c); err != nil {
 		return nil, http.StatusInternalServerError, err
 	}
-	return out, http.StatusOK, nil
+	return ioutil.NopCloser(out), http.StatusOK, nil
 }
 
 func putCounterJSON(in io.Reader) (int, error) {

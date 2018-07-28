@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-func readFile(path string) (io.Reader, int, error) {
+func readFile(path string) (io.ReadCloser, int, error) {
 	f, err := os.Open(filepath.Join("assets", path))
 	if err != nil {
 		if os.IsNotExist(err) {
