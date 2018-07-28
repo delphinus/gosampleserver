@@ -21,4 +21,5 @@ docker run -d --rm --name memd --network my-network memcached
 ```sh
 docker kill gosampleserver
 docker kill memd
+docker network rm my-network
 ```
