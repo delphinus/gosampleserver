@@ -7,8 +7,7 @@
     counter.innerHTML = num;
 
     increment.addEventListener("click", async () => {
-        const num = parseInt(counter.innerHTML, 10);
-        num++;
+        const num = parseInt(counter.innerHTML, 10) + 1;
         await fetch("/counter", {
             method: "POST",
             headers: {
