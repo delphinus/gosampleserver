@@ -1,0 +1,11 @@
+---
+version: '2'
+services:
+  gosampleserver:
+    image: gosampleserver
+    ports:
+      - 0.0.0.0:8080:8080
+  memd:
+    image: memcached
+networks:
+  default:
