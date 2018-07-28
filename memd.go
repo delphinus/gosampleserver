@@ -21,16 +21,18 @@ type Counter struct {
 }
 
 func getCounterJSON() (io.Reader, int, error) {
+	var c Counter
 	mc := memcache.New(memd)
-	item, err := mc.Get(key)
-	if err != nil {
+	if item, err := mc.Get(key); err == nil {
+		var num int
+		num, err = strconv.Atoi(string(item.Value))
+		if err != nil {
+			return nil, http.StatusInternalServerError, err
+		}
+		c.Num = num
+	} else if err != memcache.ErrCacheMiss {
 		return nil, http.StatusInternalServerError, err
 	}
-	num, err := strconv.Atoi(string(item.Value))
-	if err != nil {
-		return nil, http.StatusInternalServerError, err
-	}
-	c := Counter{num}
 	out := bytes.NewBuffer(nil)
 	if err := json.NewEncoder(out).Encode(&c); err != nil {
 		return nil, http.StatusInternalServerError, err
