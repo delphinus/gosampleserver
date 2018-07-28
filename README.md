@@ -23,3 +23,12 @@ docker kill gosampleserver
 docker kill memd
 docker network rm my-network
 ```
+
+### with `docker-compose`
+
+```sh
+# start
+docker-compose up -d
+# stop
+docker-compose down
+```
