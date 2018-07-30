@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	memd = "memd:11211"
+	memd = "cache:11211"
 	key  = "counter"
 )
 
