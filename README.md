@@ -11,16 +11,16 @@ This is a sample app to show illustration for multi Docker Containers.
 ```sh
 docker build -t gosampleserver .
 docker network create my-network
-docker run -d --rm --name gosampleserver -p 8080:8080 --network my-network gosampleserver
-docker run -d --rm --name memd --network my-network memcached
+docker run -d --rm --name web -p 8080:8080 --network my-network gosampleserver
+docker run -d --rm --name cache --network my-network memcached
 # open http://0:8080 in your browser
 ```
 
 ### Stop
 
 ```sh
-docker kill gosampleserver
-docker kill memd
+docker kill web
+docker kill cache
 docker network rm my-network
 ```
 
